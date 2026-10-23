@@ -7,96 +7,50 @@
   <title>食品智能适配助手</title>
   <style>
     :root {
-      --bg: #f7f8f4;
-      --card: #ffffff;
-      --ink: #20291f;
-      --muted: #697469;
-      --green: #26734d;
-      --green-dark: #1d5c3d;
-      --line: #e3e9e0;
-      --soft: #edf5ee;
+      --bg: #f7f8f4; --card: #fff; --ink: #20291f; --muted: #697469;
+      --green: #26734d; --green-dark: #1d5c3d; --line: #e3e9e0; --soft: #edf5ee;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-                   "Microsoft YaHei", sans-serif;
-      line-height: 1.55;
-    }
-    .page {
-      width: min(100%, 720px);
-      margin: 0 auto;
-      padding: 22px 16px 36px;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-    }
-    header { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
-    .logo {
-      width: 42px; height: 42px; border-radius: 14px;
-      display: grid; place-items: center; background: var(--soft); font-size: 23px;
-    }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.55; }
+    .page { width: min(100%, 720px); margin: 0 auto; padding: 22px 16px 28px; min-height: 100dvh; display: flex; flex-direction: column; }
+    header { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+    .logo { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; background: var(--soft); font-size: 23px; }
     .brand { font-weight: 750; letter-spacing: .2px; }
     .subbrand { color: var(--muted); font-size: 12px; }
-    .hero {
-      border-radius: 24px;
-      padding: 26px 22px;
-      background: linear-gradient(145deg, #eaf4e9, #f5f8ed 72%);
-      border: 1px solid #e0eadc;
-    }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: var(--green-dark); font-size: 12px; font-weight: 700;
-      background: rgba(255,255,255,.72); border-radius: 99px; padding: 6px 10px;
-    }
+    .hero { border-radius: 24px; padding: 25px 22px; background: linear-gradient(145deg, #eaf4e9, #f5f8ed 72%); border: 1px solid #e0eadc; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 6px; color: var(--green-dark); font-size: 12px; font-weight: 700; background: rgba(255,255,255,.72); border-radius: 99px; padding: 6px 10px; }
     h1 { margin: 15px 0 10px; font-size: clamp(27px, 7vw, 38px); line-height: 1.18; letter-spacing: -.8px; }
     .hero p { margin: 0; color: #4e5e50; font-size: 15px; }
-    .section-title { margin: 25px 2px 12px; font-size: 17px; font-weight: 750; }
+    .section-title { margin: 23px 2px 12px; font-size: 17px; font-weight: 750; }
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
-    .step {
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: 16px; padding: 14px 10px; min-height: 112px;
-    }
+    .step { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 13px 10px; min-height: 105px; }
     .step .num { color: var(--green); font-size: 12px; font-weight: 800; }
     .step strong { display: block; margin: 8px 0 4px; font-size: 14px; }
     .step span { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; }
-    .chat-card {
-      margin-top: 24px; background: var(--card); border: 1px solid var(--line);
-      border-radius: 22px; padding: 18px;
-    }
-    .chat-head { display: flex; gap: 11px; align-items: center; }
-    .bot {
-      width: 42px; height: 42px; border-radius: 14px; background: var(--soft);
-      display: grid; place-items: center; font-size: 22px; flex: 0 0 auto;
-    }
-    .chat-head strong { display: block; }
+    .chat-card { margin-top: 22px; background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+    .chat-header { padding: 16px 17px; display: flex; align-items: center; gap: 11px; border-bottom: 1px solid #edf0eb; }
+    .bot { width: 42px; height: 42px; border-radius: 14px; background: var(--soft); display: grid; place-items: center; font-size: 22px; flex: 0 0 auto; }
+    .chat-head-title { display: block; font-weight: 750; }
     .online { font-size: 12px; color: var(--muted); }
     .online i { display: inline-block; width: 7px; height: 7px; background: #3d9b65; border-radius: 50%; margin-right: 5px; }
-    .bubble {
-      margin: 17px 0 14px; padding: 13px 14px; border-radius: 5px 16px 16px 16px;
-      background: #f3f6f1; color: #3c493e; font-size: 14px;
-    }
-    .notice {
-      border: 1px dashed #cbd8c9; border-radius: 14px; padding: 12px 13px;
-      color: var(--muted); font-size: 12px; background: #fbfcfa;
-    }
-    .notice strong { color: #465747; }
-    .start {
-      margin-top: 17px; display: block; width: 100%; border: 0;
-      border-radius: 14px; padding: 14px 16px; background: var(--green);
-      color: white; font-size: 15px; font-weight: 750; cursor: pointer;
-    }
-    .start:active { background: var(--green-dark); transform: translateY(1px); }
-    footer { margin-top: auto; padding-top: 26px; text-align: center; color: #899188; font-size: 11px; }
-    @media (max-width: 360px) {
-      .page { padding-left: 12px; padding-right: 12px; }
-      .hero { padding: 22px 17px; }
-      .steps { gap: 6px; }
-      .step { padding: 12px 8px; }
-      .step strong { font-size: 13px; }
-    }
+    .mode { margin-left: auto; background: #f1f5ef; color: #55705b; border-radius: 99px; padding: 5px 8px; font-size: 11px; white-space: nowrap; }
+    .messages { padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 230px; max-height: 440px; overflow-y: auto; }
+    .message { max-width: 90%; padding: 11px 13px; border-radius: 5px 16px 16px 16px; font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .message.assistant { align-self: flex-start; background: #f1f5ef; color: #344536; }
+    .message.user { align-self: flex-end; background: var(--green); color: white; border-radius: 16px 5px 16px 16px; }
+    .message.error { background: #fff1ed; color: #923b27; }
+    .typing { color: var(--muted); font-size: 13px; padding: 0 17px 12px; }
+    .input-area { border-top: 1px solid #edf0eb; padding: 13px; }
+    .input-row { display: flex; align-items: flex-end; gap: 9px; }
+    textarea { display: block; width: 100%; min-height: 46px; max-height: 130px; resize: vertical; border: 1px solid #dbe3d8; border-radius: 14px; padding: 12px 13px; font: inherit; font-size: 14px; outline: none; background: #fcfdfb; color: var(--ink); }
+    textarea:focus { border-color: #7cad8b; box-shadow: 0 0 0 3px rgba(38,115,77,.08); }
+    .send { flex: 0 0 auto; border: 0; border-radius: 13px; padding: 12px 16px; min-height: 46px; background: var(--green); color: #fff; font-size: 14px; font-weight: 750; cursor: pointer; }
+    .send:disabled { opacity: .55; cursor: not-allowed; }
+    .hint { color: #8a9388; font-size: 11px; margin: 9px 3px 0; }
+    .quick-questions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 11px; }
+    .quick-questions button { border: 1px solid #dce6d9; border-radius: 99px; background: #fff; color: #3f6047; padding: 7px 10px; font-size: 12px; cursor: pointer; }
+    footer { margin-top: auto; padding-top: 23px; text-align: center; color: #899188; font-size: 11px; }
+    @media (max-width: 390px) { .page { padding-left: 12px; padding-right: 12px; } .hero { padding: 22px 17px; } .steps { gap: 6px; } .step { padding: 11px 8px; } .step strong { font-size: 13px; } .mode { display: none; } .send { padding: 12px; } }
   </style>
 </head>
 <body>
@@ -112,50 +66,126 @@
     <section class="hero">
       <div class="eyebrow">✦ 扫码即用 · 无需下载 App</div>
       <h1>找到更适合<br>自己的食品选择</h1>
-      <p>通过简单的问答，了解产品信息，并根据你的饮食偏好与实际需求进行参考性匹配。</p>
+      <p>向 AI 提问，了解食品相关知识。接入产品报告后，还可以进一步分析产品信息与你的需求是否匹配。</p>
     </section>
 
     <div class="section-title">使用流程</div>
     <section class="steps" aria-label="使用流程">
-      <div class="step">
-        <div class="num">STEP 01</div>
-        <strong>了解产品</strong>
-        <span>查看产品介绍与相关资料</span>
-      </div>
-      <div class="step">
-        <div class="num">STEP 02</div>
-        <strong>回答问题</strong>
-        <span>告诉助手你的偏好与需求</span>
-      </div>
-      <div class="step">
-        <div class="num">STEP 03</div>
-        <strong>查看分析</strong>
-        <span>了解匹配理由与注意事项</span>
-      </div>
+      <div class="step"><div class="num">STEP 01</div><strong>了解产品</strong><span>查看产品介绍与相关资料</span></div>
+      <div class="step"><div class="num">STEP 02</div><strong>回答问题</strong><span>告诉助手你的偏好与需求</span></div>
+      <div class="step"><div class="num">STEP 03</div><strong>查看分析</strong><span>了解匹配理由与注意事项</span></div>
     </section>
 
-    <section class="chat-card">
-      <div class="chat-head">
+    <section class="chat-card" aria-label="AI 对话">
+      <div class="chat-header">
         <div class="bot" aria-hidden="true">🤖</div>
         <div>
-          <strong>产品问答助手</strong>
-          <div class="online"><i></i>网页预览版</div>
+          <span class="chat-head-title">DeepSeek 产品问答助手</span>
+          <div class="online"><i></i><span id="statusText">聊天接口已配置，等待提问</span></div>
         </div>
+        <span class="mode">通用测试版</span>
       </div>
-      <div class="bubble">
-        你好！这里将用于回答你关于食品产品的问题，并帮助你根据产品资料了解它是否符合你的需求。
+      <div class="messages" id="messages" aria-live="polite">
+        <div class="message assistant">你好！我是食品智能适配助手，目前可以回答一般问题。你可以问我食品标签怎么看、营养成分是什么意思，或怎样判断一款食品是否符合自己的需求。
+
+注意：我目前还没有读取你的具体产品报告，因此不会直接断言某款食品适合你。</div>
       </div>
-      <div class="notice">
-        <strong>当前阶段：</strong>网页界面已搭建，AI 问答和产品报告分析尚未接入。下一步会接入后端服务，再启用真实问答。
+      <div class="typing" id="typing" hidden>DeepSeek 正在思考…</div>
+      <div class="input-area">
+        <div class="input-row">
+          <textarea id="question" rows="1" maxlength="2000" placeholder="输入你想问的问题…" aria-label="输入问题"></textarea>
+          <button class="send" id="sendBtn" type="button">发送</button>
+        </div>
+        <div class="quick-questions">
+          <button type="button" data-question="你好，请介绍一下你自己。">介绍一下你自己</button>
+          <button type="button" data-question="购买食品时，应该重点看哪些信息？">食品标签怎么看</button>
+          <button type="button" data-question="怎样初步判断一款食品是否符合个人需求？">如何判断是否适合</button>
+        </div>
+        <div class="hint">测试版：请勿输入身份证号、联系方式等敏感信息。具体产品评估将在接入报告后完善。</div>
       </div>
-      <button class="start" type="button" id="startBtn">开始体验</button>
     </section>
 
-    <footer>本页面为项目原型 · 具体产品结论以可靠的产品资料及专业判断为准</footer>
+    <footer>食品智能适配助手 · AI 回答仅供一般信息参考，具体结论需结合可靠产品资料</footer>
   </main>
+
   <script>
-    document.getElementById("startBtn").addEventListener("click", function () {
-      alert("网页界面测试成功！下一步：部署到公网，再生成扫码二维码。AI 问答将在后续接入。");
+    // Supabase Edge Function public endpoint. The publishable key is designed for browser use;
+    // never put the DeepSeek API key in this file.
+    const API_URL = "https://coksemfmjcodzodwwevj.supabase.co/functions/v1/food-ai-chat";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_T7a-rM15lL59Fg3VThFz0g__luacaUe";
+
+    const messagesEl = document.getElementById("messages");
+    const questionEl = document.getElementById("question");
+    const sendBtn = document.getElementById("sendBtn");
+    const typingEl = document.getElementById("typing");
+    const statusText = document.getElementById("statusText");
+    const history = [];
+
+    function addMessage(role, text, isError = false) {
+      const div = document.createElement("div");
+      div.className = "message " + role + (isError ? " error" : "");
+      div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    async function sendQuestion(preset) {
+      const question = (typeof preset === "string" ? preset : questionEl.value).trim();
+      if (!question || sendBtn.disabled) return;
+      if (question.length > 2000) {
+        addMessage("assistant", "问题太长了，请控制在 2000 个字符以内。", true);
+        return;
+      }
+
+      addMessage("user", question);
+      history.push({ role: "user", content: question });
+      questionEl.value = "";
+      sendBtn.disabled = true;
+      typingEl.hidden = false;
+      statusText.textContent = "正在请求 DeepSeek…";
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_PUBLISHABLE_KEY
+          },
+          body: JSON.stringify({ messages: history.slice(-10) })
+        });
+
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(data.error || ("请求失败（HTTP " + response.status + "）"));
+        }
+        if (typeof data.reply !== "string" || !data.reply.trim()) {
+          throw new Error("没有收到有效回答，请稍后重试。");
+        }
+        history.push({ role: "assistant", content: data.reply });
+        addMessage("assistant", data.reply);
+        statusText.textContent = "已连接 · 可以继续提问";
+      } catch (error) {
+        addMessage("assistant", "暂时没有回答成功：" + (error.message || "网络错误") + "\n\n请确认后端已配置 DEEPSEEK_API_KEY，然后再试一次。", true);
+        // Remove the failed user turn so the conversation history stays consistent.
+        history.pop();
+        statusText.textContent = "连接未成功，请检查配置";
+      } finally {
+        typingEl.hidden = true;
+        sendBtn.disabled = false;
+        questionEl.focus();
+      }
+    }
+
+    sendBtn.addEventListener("click", () => sendQuestion());
+    questionEl.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendQuestion();
+      }
+    });
+    document.querySelectorAll("[data-question]").forEach((button) => {
+      button.addEventListener("click", () => sendQuestion(button.dataset.question));
     });
   </script>
 </body>
