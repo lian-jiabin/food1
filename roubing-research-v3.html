@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f7f0">
+<meta name="description" content="肉饼营养研究与适配助手：RMR估算、营养标签换算、钠与过敏原知识、研究来源和AI问答。">
+<title>肉饼营养研究与适配助手</title>
+<style>
+:root{--bg:#f5f7f0;--paper:#fffefa;--ink:#20291f;--muted:#667466;--green:#286b4b;--green2:#1d5038;--mint:#e9f1e5;--line:#e1e7dc;--amber:#fff3d9;--rose:#fff0eb;--shadow:0 14px 40px rgba(28,65,48,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.55}
+button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--green);text-underline-offset:3px}a:hover{color:var(--green2)}
+.wrap{width:min(1180px,calc(100% - 34px));margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0}.brand{display:flex;align-items:center;gap:11px;font-weight:800}.brand-mark{width:42px;height:42px;border-radius:14px;background:#e5efdf;display:grid;place-items:center;font-size:23px}.brand small{display:block;color:var(--muted);font-size:11px;font-weight:500}.top-actions{display:flex;align-items:center;gap:9px}.pill{font-size:11px;padding:7px 11px;border:1px solid #dce7d6;background:#fafff7;border-radius:99px;color:var(--green)}
+.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:750;font-size:12px;transition:transform .15s,opacity .15s}.btn:active{transform:scale(.98)}.btn:disabled{opacity:.55;cursor:wait}.primary{background:var(--green);color:white}.secondary{background:white;border:1px solid var(--line);color:var(--ink)}.wide{width:100%}
+.hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(240px,.55fr);gap:26px;padding:32px;background:linear-gradient(120deg,#e8f1e3,#f7f3e7);border:1px solid #e3eadc;border-radius:28px;box-shadow:var(--shadow);align-items:center}.eyebrow{font-size:10px;font-weight:900;letter-spacing:.16em;color:var(--green);text-transform:uppercase}.hero h1{font-size:clamp(31px,4vw,48px);letter-spacing:-.045em;line-height:1.12;margin:14px 0}.hero p{max-width:650px;color:#536451;font-size:14px}.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:19px}.hero-note{font-size:11px!important;margin-top:15px}
+.qr-box{background:rgba(255,255,255,.8);border:1px solid #e0e7d9;border-radius:21px;padding:18px;text-align:center}.qr-box img{width:158px;height:158px;object-fit:contain;background:#fff;border:6px solid white;border-radius:12px;image-rendering:pixelated}.qr-box strong{display:block;margin-top:7px;font-size:13px}.qr-box p{font-size:10px;margin:4px auto 10px}.qr-actions{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}.qr-actions .btn{font-size:10px;padding:8px 10px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:34px 0 14px}.section-head h2{font-size:22px;letter-spacing:-.025em;margin:3px 0}.section-head p{font-size:12px;color:var(--muted);margin:0;max-width:650px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}.stack{display:grid;gap:18px;min-width:0}.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 5px 24px rgba(35,59,38,.025);min-width:0}.panel-head{padding:21px 22px 16px;border-bottom:1px solid #edf0e8}.panel-head h2{font-size:19px;letter-spacing:-.025em;margin:5px 0}.panel-head p{font-size:12px;color:var(--muted);margin:5px 0 0}.panel-body{padding:20px 22px}.step{font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--green)}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{min-width:0}.field.full{grid-column:1/-1}label{display:block;font-size:11px;font-weight:800;color:#4b5c4a;margin-bottom:6px}input,select,textarea{width:100%;min-width:0;border:1px solid var(--line);background:#fff;border-radius:11px;padding:11px 12px;color:var(--ink);outline:none}input:focus,select:focus,textarea:focus{border-color:#83ae91;box-shadow:0 0 0 3px rgba(40,107,75,.09)}input::placeholder,textarea::placeholder{color:#a1a99e}.helper{font-size:10px;color:var(--muted);margin:6px 0 0}.form-actions{margin-top:15px}.hidden{display:none!important}
+.result{display:none;background:var(--mint);border:1px solid #d9e6d3;border-radius:15px;padding:15px;margin-top:16px}.result.show{display:block}.result-top{display:grid;grid-template-columns:1fr 1fr;gap:10px}.result-stat{padding:13px;background:#fffefa;border:1px solid #e1e9dc;border-radius:13px}.result-stat span{display:block;font-size:10px;color:var(--muted)}.result-stat strong{display:block;font-size:25px;color:var(--green2);line-height:1.3;overflow-wrap:anywhere}.result-stat small{font-size:10px;color:var(--muted)}.formula{font-size:11px;line-height:1.7;color:#536451;margin-top:11px;padding:11px;background:rgba(255,255,255,.65);border-radius:11px;overflow-wrap:anywhere}.notice{padding:12px 13px;border-radius:13px;font-size:11px;line-height:1.6}.notice.amber{background:var(--amber);color:#785820;border:1px solid #f1e4c5}.notice.rose{background:var(--rose);color:#88513e;border:1px solid #f0ddd5}.notice.green{background:#edf5e9;color:#355b3d;border:1px solid #dbe8d5}
+.chat-status{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-top:8px}.dot{width:7px;height:7px;border-radius:50%;background:#53a86d}.chat-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.chat-actions .btn{font-size:10px;padding:8px 10px}.chat-log{height:365px;overflow:auto;padding:17px;display:flex;flex-direction:column;gap:11px;background:#fcfdf9}.bubble{white-space:pre-wrap;overflow-wrap:anywhere;max-width:95%;padding:12px 13px;border-radius:14px;font-size:12px;line-height:1.7}.bubble.assistant{background:#edf3e9;border:1px solid #e2ebdc;align-self:flex-start;border-bottom-left-radius:5px}.bubble.user{background:var(--green);color:white;align-self:flex-end;border-bottom-right-radius:5px}.bubble.error{background:#fff0eb;border-color:#f0d9cf;color:#8a4d39}.bubble-wrap{display:flex;flex-direction:column;gap:3px}.bubble-meta{font-size:10px;color:var(--muted)}.bubble-meta button{background:none;border:0;color:var(--green);padding:2px 4px;text-decoration:underline}.chat-compose{padding:15px;border-top:1px solid #edf0e8}.chat-compose textarea{resize:vertical;min-height:74px;max-height:160px}.compose-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px}.counter{font-size:10px;color:var(--muted)}.suggestions{display:flex;gap:7px;flex-wrap:wrap;padding:0 15px 15px}.suggestion{border:1px solid var(--line);background:white;color:#536451;border-radius:99px;padding:8px 10px;font-size:10px}
+.nutrition-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.nutrition-results{display:none;margin-top:15px}.nutrition-results.show{display:block}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.metric{background:#f5f8f1;border:1px solid #e3eade;border-radius:12px;padding:11px;min-width:0}.metric strong{display:block;font-size:16px;color:var(--green2);overflow-wrap:anywhere}.metric span{display:block;font-size:10px;color:var(--muted)}.metric small{font-size:9px;color:var(--muted)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.knowledge-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:19px}.knowledge-card h3{font-size:15px;margin:7px 0}.knowledge-card p,.knowledge-card li{font-size:12px;color:#586656;line-height:1.7}.knowledge-card ul{padding-left:18px}.knowledge-card .source{font-size:10px;display:inline-block;margin-top:5px}.source-list{display:grid;gap:10px}.source-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #edf0e8}.source-item:last-child{border-bottom:0}.source-number{flex:0 0 27px;height:27px;display:grid;place-items:center;background:#eaf2e5;color:var(--green);border-radius:9px;font-size:11px;font-weight:900}.source-item strong{font-size:12px}.source-item p{font-size:11px;color:var(--muted);margin:4px 0}.source-item a{font-size:11px}
+details{border:1px solid var(--line);border-radius:14px;background:#fffefa}summary{cursor:pointer;list-style:none;padding:14px;font-weight:800;font-size:12px;display:flex;justify-content:space-between;gap:10px}summary::-webkit-details-marker{display:none}summary:after{content:"＋";color:var(--green)}details[open] summary:after{content:"−"}.details-body{padding:0 14px 15px}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.choice{display:flex;align-items:flex-start;gap:7px;padding:9px;border:1px solid var(--line);border-radius:10px;font-size:10px;font-weight:500;background:white;cursor:pointer}.choice input{width:auto;margin:3px 0 0;accent-color:var(--green);flex:0 0 auto}
+.footer{padding:26px 0 35px;color:var(--muted);font-size:10px;text-align:center}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:#203b2c;color:white;padding:10px 15px;border-radius:99px;font-size:12px;transition:.2s;z-index:99;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding:25px}.qr-box{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;text-align:left}.qr-box img{width:125px;height:125px;grid-row:span 2}.qr-box p{margin:3px 0}.qr-actions{justify-content:flex-start}.layout{grid-template-columns:1fr}.knowledge-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.wrap{width:calc(100% - 22px)}.topbar{padding:12px 0}.pill{display:none}.brand-mark{width:38px;height:38px}.hero{padding:21px;border-radius:22px}.hero h1{font-size:34px}.hero p{font-size:12px}.section-head{align-items:flex-start;flex-direction:column;margin-top:27px}.panel-head{padding:18px 17px 14px}.panel-body{padding:17px}.field-grid,.nutrition-grid{grid-template-columns:1fr 1fr}.result-stat strong{font-size:22px}.chat-log{height:330px;padding:12px}.knowledge-grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.qr-box{grid-template-columns:104px 1fr;padding:13px}.qr-box img{width:100px;height:100px}.qr-box .btn{padding:7px 8px}.choice-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:370px){.field-grid,.nutrition-grid,.choice-grid{grid-template-columns:1fr}.top-actions .btn{padding:9px}.hero h1{font-size:30px}.result-top{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar">
+  <div class="brand"><div class="brand-mark">🥟</div><div>肉饼营养研究助手<small>研究公式 · 营养标签 · 证据来源 · AI 问答</small></div></div>
+  <div class="top-actions"><span class="pill">无需下载 App</span><button class="btn secondary" id="jumpQR" type="button">二维码 / 分享</button></div>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">SMART NUTRITION · EVIDENCE FIRST</div>
+    <h1>先看懂营养数据，<br>再判断肉饼是否适合你</h1>
+    <p>用研究报告中的公式估算静息代谢率（RMR），把包装营养标签换算成实际食用份量，并查看国家标准、膳食指南和世界卫生组织资料。产品本身的数据必须来自真实标签或检测报告。</p>
+    <div class="hero-actions"><a class="btn primary" href="#calculator" style="text-decoration:none">开始估算 RMR ↗</a><a class="btn secondary" href="#productNutrition" style="text-decoration:none">计算肉饼营养 ↘</a></div>
+    <p class="hero-note">研究模型输出是估算值，不是医疗诊断；没有标签或检测数据时，助手不会猜测肉饼的真实营养成分。</p>
+  </div>
+  <div class="qr-box" id="shareCard">
+    <img id="qrImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUgAAAFIAQAAAAAab1qeAAACG0lEQVR4nO2awW7jMAxE3yzy/788PZCUbWAP8S7SUi6DBrWjB0gkSItDWebNz593wSGHHHLIX0G+ABTXRuDTjY+Rn17nLuQLCH+husDCMsjHyDYWdfAnKlcSERpR6vPILhZ1Io0iKoWP1P+u2Z9Avi53wjhcmin/2dmfR6Y/w3OyhC07PevTY2AXizr480hsC1mWhXwZ2cWinyWvOS1npmepdB7cxaIGpEBIKP4hW2Cjic+bZCV17Oj5y7qPYklTz98kjWxJilDNih4ZVI+EDuvsT2Z8rhreq06KuyNud7GogT9Z3stsB5ZGUvp3F4sakBLGlgUIG8DYWYOOfr9HhsxUKM1wpskN38qMb7DODcjSR5nVAlWek3V9yvhdLGpApiKKAM1KSX8lPzH7A0kBssk2cvQ9U3p2WucupFMSoazg08GO3t3sRzdJ1elGVqMlmc6N5g7r7E++IDxmVhmvlEfo3BDZxaIupJwHcjZEQ4SSn5+f/VGkJGRFEzkyP0IzWkyj3+/qzRCa9a0HKDD9pX8ho/ZU1UYp4fMMpK4arHMD8tKfj8B0SaQVnJr4fPdzeT8kWp5xCnf0Pke/39bvWSnV8UYJd+JPE59vk5f3Q6qa1/nhmcppG4sakeu8I3p2spl8/w/SyF4bVL3N4NHv9/ufeZuafQn5ajp9aPbnkZf3Q6IPWgkeG5FK2O9iUaP689tnH3LIIYfcl/wClSPworUJ4CcAAAAASUVORK5CYII=" alt="扫描二维码打开肉饼营养研究助手">
+    <div><strong>手机扫码，直接打开网页</strong><p>相机或微信扫一扫即可访问，无需安装 App。</p><div class="qr-actions"><button class="btn primary" id="downloadQR" type="button">下载二维码</button><button class="btn secondary" id="copyURL" type="button">复制链接</button></div></div>
+  </div>
+</section>
+
+<div class="section-head"><div><div class="eyebrow">STEP 01 · BODY ESTIMATE</div><h2>静息代谢率与全天能量估算</h2></div><p>NEW_W / NEW_BC 为项目研究报告中的模型；TDEE 是在 RMR 上额外乘以通用活动系数的粗略估算，不属于报告原公式。</p></div>
+<main class="layout" id="calculator">
+  <div class="stack">
+    <section class="panel">
+      <div class="panel-head"><div class="step">RMR CALCULATOR</div><h2>静息代谢率估算</h2><p>按报告要求填写对应参数，切换模型时会自动显示所需字段。</p></div>
+      <div class="panel-body">
+        <div class="field-grid">
+          <div class="field full"><label for="model">预测公式</label><select id="model"><option value="newW">NEW_W · 身高、体重公式</option><option value="newBC">NEW_BC · 身体成分公式</option></select></div>
+          <div class="field"><label for="sex">性别（报告编码）</label><select id="sex"><option value="0">女性（0）</option><option value="1">男性（1）</option></select></div>
+          <div class="field"><label for="age">年龄（岁）</label><input id="age" type="number" min="1" max="110" placeholder="例如 25"></div>
+          <div class="field newW"><label for="height">身高（cm）</label><input id="height" type="number" min="80" max="250" step="0.1" placeholder="例如 170"></div>
+          <div class="field newW"><label for="weight">体重（kg）</label><input id="weight" type="number" min="15" max="350" step="0.1" placeholder="例如 65"></div>
+          <div class="field newBC hidden"><label for="fatMass">脂肪量（kg）</label><input id="fatMass" type="number" min="0" max="250" step="0.1" placeholder="需要身体成分测量值"></div>
+          <div class="field newBC hidden"><label for="ffm">去脂体重（kg）</label><input id="ffm" type="number" min="1" max="300" step="0.1" placeholder="需要身体成分测量值"></div>
+          <div class="field full"><label for="sun">日均暴露阳光时长（报告编码）</label><select id="sun"><option value="1">少于 15 分钟/天（1）</option><option value="2">15–30 分钟/天（2）</option><option value="3">31–45 分钟/天（3）</option><option value="4">超过 45 分钟/天（4）</option></select></div>
+          <div class="field full"><label for="activity">活动水平（仅用于额外估算 TDEE）</label><select id="activity"><option value="1.2">久坐为主 · ×1.20</option><option value="1.375">轻度活动 · ×1.375</option><option value="1.55">中等活动 · ×1.55</option><option value="1.725">高活动 · ×1.725</option><option value="1.9">非常高活动 · ×1.90</option></select></div>
+        </div>
+        <div class="form-actions"><button class="btn primary wide" id="calcBtn" type="button">计算我的 RMR 与 TDEE →</button></div>
+        <div class="result" id="result" aria-live="polite">
+          <div class="result-top">
+            <div class="result-stat"><span>静息代谢率 RMR</span><strong><b id="rmrValue">—</b></strong><small>kcal / 天（模型估算）</small></div>
+            <div class="result-stat"><span>全天能量消耗 TDEE</span><strong><b id="tdeeValue">—</b></strong><small>kcal / 天（额外粗估）</small></div>
+          </div>
+          <div class="formula" id="formulaText"></div>
+        </div>
+        <div class="notice amber" style="margin-top:13px">重要说明：预测方程对不同人群的误差可能不同。系统综述指出，公式准确性受样本人群和测量条件影响；如果需要临床级准确度，应由专业人员评估，必要时使用间接测热等测量方法。</div>
+      </div>
+    </section>
+
+    <section class="panel" id="productNutrition">
+      <div class="panel-head"><div class="step">STEP 02 · PRODUCT LABEL</div><h2>肉饼营养标签换算器</h2><p>默认按中国常见的每 100 g 标签输入；请将数值抄自真实包装，不要把示例值当成产品检测结果。</p></div>
+      <div class="panel-body">
+        <div class="notice green">没有肉饼正式配料表、营养成分表和检测报告，因此本页面不预填产品营养值。标签缺失时会显示“未填写”，不会自动编造。</div>
+        <div class="nutrition-grid" style="margin-top:14px">
+          <div class="field"><label for="labelBasis">标签数据基准</label><select id="labelBasis"><option value="100g">每 100 g</option><option value="serving">每份（按标签份量）</option></select></div>
+          <div class="field"><label for="portionG">实际食用量（g）</label><input id="portionG" type="number" min="1" max="3000" step="1" placeholder="输入实际克数"></div>
+          <div class="field basis100"><label for="energyKj">能量（kJ / 100 g）</label><input id="energyKj" type="number" min="0" step="0.1" placeholder="从营养成分表抄录"></div>
+          <div class="field basisServing hidden"><label for="labelServingG">标签每份重量（g）</label><input id="labelServingG" type="number" min="1" max="3000" step="1" placeholder="例如 120"></div>
+          <div class="field basisServing hidden"><label for="energyKjServing">能量（kJ / 份）</label><input id="energyKjServing" type="number" min="0" step="0.1" placeholder="从营养成分表抄录"></div>
+          <div class="field basis100"><label for="protein">蛋白质（g / 100 g）</label><input id="protein" type="number" min="0" step="0.1" placeholder="标签数值"></div>
+          <div class="field basisServing hidden"><label for="proteinServing">蛋白质（g / 份）</label><input id="proteinServing" type="number" min="0" step="0.1" placeholder="标签数值"></div>
+          <div class="field basis100"><label for="fat">脂肪（g / 100 g）</label><input id="fat" type="number" min="0" step="0.1" placeholder="标签数值"></div>
+          <div class="field basisServing hidden"><label for="fatServing">脂肪（g / 份）</label><input id="fatServing" type="number" min="0" step="0.1" placeholder="标签数值"></div>
+          <div class="field basis100"><label for="satFat">饱和脂肪（g / 100 g）</label><input id="satFat" type="number" min="0" step="0.1" placeholder="如标签有标示"></div>
+          <div class="field basisServing hidden"><label for="satFatServing">饱和脂肪（g / 份）</label><input id="satFatServing" type="number" min="0" step="0.1" placeholder="如标签有标示"></div>
+          <div class="field basis100"><label for="carbs">碳水化合物（g / 100 g）</label><input id="carbs" type="number" min="0" step="0.1" placeholder="标签数值"></div>
+          <div class="field basisServing hidden"><label for="carbsServing">碳水化合物（g / 份）</label><input id="carbsServing" type="number" min="0" step="0.1" placeholder="标签数值"></div>
+          <div class="field basis100"><label for="sugar">糖（g / 100 g）</label><input id="sugar" type="number" min="0" step="0.1" placeholder="如标签有标示"></div>
+          <div class="field basisServing hidden"><label for="sugarServing">糖（g / 份）</label><input id="sugarServing" type="number" min="0" step="0.1" placeholder="如标签有标示"></div>
+          <div class="field basis100"><label for="sodium">钠（mg / 100 g）</label><input id="sodium" type="number" min="0" step="1" placeholder="标签数值"></div>
+          <div class="field basisServing hidden"><label for="sodiumServing">钠（mg / 份）</label><input id="sodiumServing" type="number" min="0" step="1" placeholder="标签数值"></div>
+        </div>
+        <p class="helper">留空的营养项不会被当成 0；计算结果会明确标记“未提供”。能量换算采用 1 kcal ≈ 4.184 kJ。</p>
+        <div class="form-actions"><button class="btn primary wide" id="calcNutrition" type="button">计算实际食用量的营养总量 →</button></div>
+        <div class="nutrition-results" id="nutritionResults" aria-live="polite">
+          <div class="notice green" id="portionSummary"></div>
+          <div class="metrics">
+            <div class="metric"><strong id="outKj">—</strong><span>能量（kJ）</span></div>
+            <div class="metric"><strong id="outKcal">—</strong><span>能量（kcal）</span></div>
+            <div class="metric"><strong id="outProtein">—</strong><span>蛋白质（g）</span></div>
+            <div class="metric"><strong id="outFat">—</strong><span>脂肪（g）</span></div>
+            <div class="metric"><strong id="outSatFat">—</strong><span>饱和脂肪（g）</span></div>
+            <div class="metric"><strong id="outCarbs">—</strong><span>碳水化合物（g）</span></div>
+            <div class="metric"><strong id="outSugar">—</strong><span>糖（g）</span></div>
+            <div class="metric"><strong id="outSodium">—</strong><span>钠（mg）</span></div>
+            <div class="metric"><strong id="outSalt">—</strong><span>折算食盐（g）</span><small>按钠换算的近似值</small></div>
+          </div>
+          <p class="helper" id="energyCompare"></p>
+          <p class="helper">盐当量只用于帮助理解钠摄入，不代表这份食物实际加入了多少食盐；其他含钠配料也会贡献钠。</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="stack">
+    <section class="panel" id="assistant">
+      <div class="panel-head"><div class="step">STEP 03 · AI ASSISTANT</div><h2>肉饼专属问答</h2><p>可以问公式含义、标签怎么读、钠和过敏原需要注意什么。产品实际营养仍以真实标签或检测结果为准。</p><div class="chat-status"><span class="dot"></span><span id="statusText">在线界面 · 等待提问</span></div><div class="chat-actions"><button class="btn secondary" id="exportChat" type="button">导出对话</button><button class="btn secondary" id="newChat" type="button">新对话</button></div></div>
+      <div class="chat-log" id="chatLog" aria-live="polite"><div class="bubble-wrap"><div class="bubble assistant">你好！我是肉饼营养研究助手。你可以问我 RMR 公式、营养标签换算、钠摄入或过敏原标示。当前还没有这款肉饼的正式配料表和营养成分表，所以我不会编造具体数值。</div></div></div>
+      <div class="suggestions">
+        <button class="suggestion" data-q="RMR 和 TDEE 有什么区别？">RMR 与 TDEE 的区别</button>
+        <button class="suggestion" data-q="如何看懂肉饼包装上的营养成分表？">怎么看营养标签</button>
+        <button class="suggestion" data-q="钠和食盐有什么区别？如何把钠换算成食盐？">钠和盐的换算</button>
+        <button class="suggestion" data-q="判断肉饼是否适合我，还缺哪些资料？">适配判断还缺什么</button>
+      </div>
+      <div class="chat-compose"><textarea id="question" maxlength="2000" rows="3" placeholder="输入问题，例如：一份肉饼的钠占每日建议量多少？"></textarea><div class="compose-row"><span class="counter" id="counter">0 / 2000</span><button class="btn primary" id="sendBtn" type="button">发送问题 ↑</button></div></div>
+      <div class="panel-body" style="padding-top:0"><div class="notice amber">隐私提示：RMR 计算在当前浏览器本地完成；发送给 AI 的是你输入的问题。若使用下方适配表单，所选偏好与补充说明会发送给 AI 服务。请勿填写姓名、电话、身份证号等身份信息。</div></div>
+      <details style="margin:0 16px 17px" id="fitDetails">
+        <summary>填写需求，生成初步适配分析</summary>
+        <div class="details-body">
+          <p class="helper">这不是医疗诊断。若有严重食物过敏、慢性病或特殊医学营养需求，请以医生、注册营养师和生产者提供的信息为准。</p>
+          <form id="fitForm">
+            <label style="margin-top:12px">主要关注点（可多选）</label>
+            <div class="choice-grid">
+              <label class="choice"><input type="checkbox" name="goal" value="能量摄入">能量摄入</label>
+              <label class="choice"><input type="checkbox" name="goal" value="蛋白质摄入">蛋白质摄入</label>
+              <label class="choice"><input type="checkbox" name="goal" value="脂肪和饱和脂肪">脂肪 / 饱和脂肪</label>
+              <label class="choice"><input type="checkbox" name="goal" value="钠和盐摄入">钠 / 盐摄入</label>
+              <label class="choice"><input type="checkbox" name="goal" value="运动后餐食安排">运动后餐食</label>
+              <label class="choice"><input type="checkbox" name="goal" value="日常均衡饮食">均衡饮食</label>
+            </div>
+            <label style="margin-top:13px">需特别核对的事项（可多选）</label>
+            <div class="choice-grid">
+              <label class="choice"><input type="checkbox" name="risk" value="食物过敏或需避开特定配料">食物过敏 / 避开配料</label>
+              <label class="choice"><input type="checkbox" name="risk" value="需要关注钠摄入">关注钠摄入</label>
+              <label class="choice"><input type="checkbox" name="risk" value="需要关注饱和脂肪">关注饱和脂肪</label>
+              <label class="choice"><input type="checkbox" name="risk" value="有明确的能量目标">明确能量目标</label>
+              <label class="choice"><input type="checkbox" name="risk" value="儿童或特殊饮食需求">儿童 / 特殊饮食</label>
+              <label class="choice"><input type="checkbox" name="risk" value="需要专业医疗营养建议">需要专业建议</label>
+            </div>
+            <label for="fitNotes" style="margin-top:13px">补充说明（可选）</label><textarea id="fitNotes" maxlength="500" rows="2" placeholder="可填写包装标签数值、饮食偏好或需要核对的配料"></textarea>
+            <button class="btn primary wide" type="submit" style="margin-top:12px">生成初步适配分析 ↗</button>
+          </form>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div class="step">QUICK REFERENCE</div><h2>把数字放回正确的语境</h2><p>这些参考值帮助读懂食品标签，不是对某个人的诊断或个性化处方。</p></div>
+      <div class="panel-body">
+        <div class="notice green"><strong>成人钠摄入参考</strong><br>WHO 建议成人每日钠摄入少于 2,000 mg，相当于食盐少于 5 g。钠来自食盐，也可能来自酱油、调味料、加工食品等。</div>
+        <div class="notice amber" style="margin-top:10px"><strong>不要把 RMR 当成每日总需求</strong><br>RMR 是静息状态下的能量消耗估算；TDEE 还涉及活动和其他生理过程。公式估算有个体误差。</div>
+        <div class="notice rose" style="margin-top:10px"><strong>过敏原信息要核实</strong><br>配料表、过敏原提示和生产线交叉接触信息都值得检查；如有严重过敏，不能仅凭这个网页作出安全判断。</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="section-head"><div><div class="eyebrow">STEP 04 · EVIDENCE LIBRARY</div><h2>网上查到的可靠知识</h2></div><p>优先使用中国国家卫生健康委、中国疾控中心、世界卫生组织和同行评审论文。标准实施日期与适用范围会影响解释。</p></div>
+<section class="knowledge-grid">
+  <article class="knowledge-card">
+    <div class="step">01 · 营养标签</div><h3>GB 28050-2025：营养成分表</h3>
+    <p>国家卫生健康委的官方问答说明，GB 28050-2025 将于 <strong>2027 年 3 月 16 日</strong>实施。该版标准列出的强制标示内容包括能量、蛋白质、脂肪、饱和脂肪、碳水化合物、糖和钠（适用范围及豁免情形以标准原文为准）。网页因此支持把标签上的数值换算成实际食用量。</p>
+    <a class="source" href="https://www.nhc.gov.cn/sps/c100087/202509/470fa4ff5de14dd38619223cce9da4e7.shtml" target="_blank" rel="noopener">阅读国家卫健委官方问答 ↗</a>
+  </article>
+  <article class="knowledge-card">
+    <div class="step">02 · 钠与食盐</div><h3>钠不等于食盐，但可以近似换算</h3>
+    <p>WHO 建议成人每天钠摄入少于 2,000 mg（相当于食盐少于 5 g）。WHO 给出的换算关系为：<strong>1 g 食盐约相当于 400 mg 钠</strong>。这是成人公共卫生参考，不是儿童剂量，也不是针对特定疾病的个人处方。</p>
+    <a class="source" href="https://www.who.int/zh/news-room/fact-sheets/detail/sodium-reduction" target="_blank" rel="noopener">阅读 WHO 中文资料 ↗</a>
+  </article>
+  <article class="knowledge-card">
+    <div class="step">03 · 过敏原与标签</div><h3>配料表、致敏物质和交叉接触</h3>
+    <p>国家卫健委对 GB 7718-2025 的解读列出八大类致敏物质：含麸质谷物、甲壳纲类、鱼类、蛋类、花生、大豆、乳及乳制品、坚果及果仁类；其他可能致敏物质的提示规则不同。该版标准将于 2027 年 3 月 16 日实施。严重过敏者还应向生产者核实共线生产与交叉接触风险。</p>
+    <a class="source" href="https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml" target="_blank" rel="noopener">阅读国家卫健委标签问答 ↗</a>
+  </article>
+  <article class="knowledge-card">
+    <div class="step">04 · 均衡饮食</div><h3>肉类要放在全天饮食中看</h3>
+    <p>中国疾控中心对《中国居民膳食指南（2022）》的介绍建议，鱼、禽、蛋和瘦肉总摄入量可参考每日 120–200 g，并建议少吃高度加工肉制品。这个量指相关食物的合计，不是“每天可以吃这么多肉饼”的单品建议。</p>
+    <a class="source" href="https://en.chinacdc.cn/health_topics/nutrition_health/202206/t20220616_259702.html" target="_blank" rel="noopener">阅读中国疾控中心资料 ↗</a>
+  </article>
+  <article class="knowledge-card">
+    <div class="step">05 · RMR 模型</div><h3>预测公式不是实测值</h3>
+    <p>一篇关于运动人群 RMR 预测方程的系统综述与荟萃分析发现，不同方程的准确性和精确度存在差异，适合的方程与目标人群特征有关。因此本工具会显示公式和输入值，并提醒结果只是估算；不能用单个数字判断疾病或营养状态。</p>
+    <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/37632665/" target="_blank" rel="noopener">阅读 PubMed 论文摘要 ↗</a>
+  </article>
+  <article class="knowledge-card">
+    <div class="step">06 · 使用边界</div><h3>没有真实产品数据，就不下产品结论</h3>
+    <p>通用肉类数据库或网上相似产品的数据不能自动代表这款肉饼。配方、肉类种类、肥瘦比例、馅料、调味和烹饪方式都会改变最终营养组成。准确分析优先使用当前产品包装标签、标准化配方或有代表性的检测报告。</p>
+    <p class="helper">这是本工具的数据质量规则：不把估算、示例和产品实测混为一谈。</p>
+  </article>
+</section>
+
+<div class="section-head"><div><div class="eyebrow">SOURCE NOTES</div><h2>资料来源与使用说明</h2></div></div>
+<section class="panel">
+  <div class="panel-body source-list">
+    <div class="source-item"><div class="source-number">1</div><div><strong>国家卫生健康委 · GB 28050-2025 官方问答</strong><p>用于解释营养成分表项目与新版标准实施日期。</p><a href="https://www.nhc.gov.cn/sps/c100087/202509/470fa4ff5de14dd38619223cce9da4e7.shtml" target="_blank" rel="noopener">打开来源</a></div></div>
+    <div class="source-item"><div class="source-number">2</div><div><strong>国家卫生健康委 · GB 7718-2025 官方问答</strong><p>用于解释新版预包装食品标签与致敏物质提示。</p><a href="https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml" target="_blank" rel="noopener">打开来源</a></div></div>
+    <div class="source-item"><div class="source-number">3</div><div><strong>世界卫生组织 · 减少钠摄入</strong><p>用于成人钠摄入参考值与钠—食盐换算。</p><a href="https://www.who.int/zh/news-room/fact-sheets/detail/sodium-reduction" target="_blank" rel="noopener">打开来源</a></div></div>
+    <div class="source-item"><div class="source-number">4</div><div><strong>中国疾控中心 · 《中国居民膳食指南（2022）》要点</strong><p>用于饮食整体平衡和鱼禽蛋瘦肉合计摄入的背景说明。</p><a href="https://en.chinacdc.cn/health_topics/nutrition_health/202206/t20220616_259702.html" target="_blank" rel="noopener">打开来源</a></div></div>
+    <div class="source-item"><div class="source-number">5</div><div><strong>PubMed · RMR 预测方程系统综述与荟萃分析</strong><p>用于说明预测方程的适用人群差异和估算误差。</p><a href="https://pubmed.ncbi.nlm.nih.gov/37632665/" target="_blank" rel="noopener">打开来源</a></div></div>
+  </div>
+</section>
+<footer class="footer">肉饼营养研究与适配助手 · 资料查阅日期：2026-10-23<br>本网页用于科普与算术换算，不替代食品检测、专业营养评估或医疗建议。</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+const API_URL = "https://coksemfmjcodzodwwevj.supabase.co/functions/v1/roubing-ai-chat";
+const SHARE_URL = "https://lian-jiabin.github.io/food1/roubing-research-v3.html";
+const modelEl = document.getElementById("model");
+const resultEl = document.getElementById("result");
+const questionEl = document.getElementById("question");
+const sendBtn = document.getElementById("sendBtn");
+const chatLog = document.getElementById("chatLog");
+const statusText = document.getElementById("statusText");
+const counter = document.getElementById("counter");
+const messages = [];
+let currentTDEE = null;
+const FORMULA_W = "NEW_W = 58.399 + 228.826×性别 − 9.732×年龄 + 4.838×身高(cm) + 11.660×体重(kg) + 20.731×阳光编码";
+const FORMULA_BC = "NEW_BC = 629.066 + 105.861×性别 − 12.501×年龄 + 6.403×脂肪量(kg) + 20.838×去脂体重(kg) + 19.271×阳光编码";
+function showToast(text){const el=document.getElementById("toast");el.textContent=text;el.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>el.classList.remove("show"),2300)}
+function copyText(text){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(text).then(()=>showToast("已复制"));const el=document.createElement("textarea");el.value=text;el.style.position="fixed";el.style.opacity="0";document.body.appendChild(el);el.select();try{document.execCommand("copy");showToast("已复制")}catch(e){showToast("复制失败，请手动复制链接")}el.remove()}
+document.getElementById("jumpQR").addEventListener("click",()=>document.getElementById("shareCard").scrollIntoView({behavior:"smooth",block:"center"}));
+document.getElementById("copyURL").addEventListener("click",()=>copyText(SHARE_URL));
+document.getElementById("downloadQR").addEventListener("click",()=>{const a=document.createElement("a");a.href=document.getElementById("qrImage").src;a.download="肉饼营养研究助手-二维码.png";document.body.appendChild(a);a.click();a.remove();showToast("二维码已准备下载")});
+function syncModel(){const bc=modelEl.value==="newBC";document.querySelectorAll(".newW").forEach(e=>e.classList.toggle("hidden",bc));document.querySelectorAll(".newBC").forEach(e=>e.classList.toggle("hidden",!bc));resultEl.classList.remove("show")}
+modelEl.addEventListener("change",syncModel);syncModel();
+document.getElementById("calcBtn").addEventListener("click",()=>{
+ const val=id=>Number(document.getElementById(id).value), raw=id=>document.getElementById(id).value.trim();
+ const age=val("age"),sex=val("sex"),sun=val("sun"),bc=modelEl.value==="newBC";
+ if(!raw("age")||!Number.isFinite(age)||age<1||age>110){alert("请填写有效年龄（1–110 岁）。");return}
+ let rmr,formula;
+ if(bc){if(!raw("fatMass")||!raw("ffm")){alert("NEW_BC 需要填写脂肪量和去脂体重。");return}const fat=val("fatMass"),ffm=val("ffm");if(!Number.isFinite(fat)||fat<0||!Number.isFinite(ffm)||ffm<=0){alert("请检查脂肪量和去脂体重。");return}rmr=629.066+105.861*sex-12.501*age+6.403*fat+20.838*ffm+19.271*sun;formula=FORMULA_BC}
+ else{if(!raw("height")||!raw("weight")){alert("NEW_W 需要填写身高和体重。");return}const h=val("height"),w=val("weight");if(!Number.isFinite(h)||h<80||h>250||!Number.isFinite(w)||w<15||w>350){alert("请检查身高或体重范围。");return}rmr=58.399+228.826*sex-9.732*age+4.838*h+11.660*w+20.731*sun;formula=FORMULA_W}
+ const activity=val("activity");currentTDEE=rmr*activity;
+ document.getElementById("rmrValue").textContent=rmr.toFixed(1);
+ document.getElementById("tdeeValue").textContent=currentTDEE.toFixed(1);
+ document.getElementById("formulaText").textContent=formula+"。性别编码："+(sex===1?"男性=1":"女性=0")+"；阳光编码="+sun+"。TDEE 使用通用活动系数 ×"+activity+" 额外估算，不属于报告原公式。";
+ resultEl.classList.add("show");
+});
+const basisEl=document.getElementById("labelBasis");
+function syncBasis(){const serving=basisEl.value==="serving";document.querySelectorAll(".basis100").forEach(e=>e.classList.toggle("hidden",serving));document.querySelectorAll(".basisServing").forEach(e=>e.classList.toggle("hidden",!serving));document.getElementById("nutritionResults").classList.remove("show")}
+basisEl.addEventListener("change",syncBasis);syncBasis();
+document.getElementById("calcNutrition").addEventListener("click",()=>{
+ const raw=id=>document.getElementById(id).value.trim(), val=id=>Number(document.getElementById(id).value);
+ if(!raw("portionG")||!Number.isFinite(val("portionG"))||val("portionG")<=0){alert("请填写实际食用量（克）。");return}
+ const portion=val("portionG"),serving=basisEl.value==="serving";
+ let basis=100;
+ if(serving){if(!raw("labelServingG")||!Number.isFinite(val("labelServingG"))||val("labelServingG")<=0){alert("请填写包装标签上的每份重量。");return}basis=val("labelServingG")}
+ const fields=serving?
+  [["energyKjServing","outKj","kJ"],["proteinServing","outProtein","g"],["fatServing","outFat","g"],["satFatServing","outSatFat","g"],["carbsServing","outCarbs","g"],["sugarServing","outSugar","g"],["sodiumServing","outSodium","mg"]]:
+  [["energyKj","outKj","kJ"],["protein","outProtein","g"],["fat","outFat","g"],["satFat","outSatFat","g"],["carbs","outCarbs","g"],["sugar","outSugar","g"],["sodium","outSodium","mg"]];
+ for(const [id] of fields){if(raw(id)!==""&&(!Number.isFinite(val(id))||val(id)<0)){alert("营养标签数值必须是有效的非负数。");return}}
+ const results={};
+ for(const [id,out,unit] of fields){let value=null;if(raw(id)!=="")value=val(id)*(serving?portion/basis:portion/100);results[out]=value;document.getElementById(out).textContent=value===null?"未提供":value.toFixed(unit==="mg"?0:1)+" "+unit}
+ const kj=results.outKj, sodium=results.outSodium;
+ document.getElementById("outKcal").textContent=kj===null?"未提供":(kj/4.184).toFixed(1)+" kcal";
+ document.getElementById("outSalt").textContent=sodium===null?"未提供":(sodium/400).toFixed(2)+" g";
+ document.getElementById("portionSummary").textContent="本次实际食用量："+portion.toFixed(1)+" g。营养结果按标签基准比例换算；未填写项目不参与计算。";
+ const energyCompare=document.getElementById("energyCompare");
+ energyCompare.textContent=(kj!==null&&currentTDEE&&currentTDEE>0)?"该份能量约占当前 TDEE 估算值的 "+((kj/4.184/currentTDEE)*100).toFixed(1)+"%。TDEE 本身为估算值，这个比例只供理解，不代表推荐摄入量。":"先完成 RMR/TDEE 估算，且填写能量标签后，可显示该份能量与 TDEE 的粗略比例。";
+ document.getElementById("nutritionResults").classList.add("show");
+});
+function addBubble(text,role,opts={}){
+ const wrap=document.createElement("div");wrap.className="bubble-wrap";
+ const el=document.createElement("div");el.className="bubble "+role+(opts.error?" error":"");el.textContent=text;wrap.appendChild(el);
+ if(opts.copy){const meta=document.createElement("div");meta.className="bubble-meta";const b=document.createElement("button");b.type="button";b.textContent="复制回答";b.addEventListener("click",()=>copyText(text));meta.appendChild(b);wrap.appendChild(meta)}
+ if(opts.retry){const meta=document.createElement("div");meta.className="bubble-meta";const b=document.createElement("button");b.type="button";b.textContent="重试本问题";b.addEventListener("click",()=>sendQuestion(opts.retry));meta.appendChild(b);wrap.appendChild(meta)}
+ chatLog.appendChild(wrap);chatLog.scrollTop=chatLog.scrollHeight;return wrap;
+}
+function updateCounter(){counter.textContent=questionEl.value.length+" / 2000"}
+questionEl.addEventListener("input",updateCounter);
+let busy=false;
+async function sendQuestion(rawQuestion){
+ const q=String(rawQuestion??questionEl.value).trim();if(!q||busy)return;if(q.length>2000){showToast("问题不能超过 2000 个字符");return}
+ busy=true;sendBtn.disabled=true;addBubble(q,"user");messages.push({role:"user",content:q});questionEl.value="";updateCounter();statusText.textContent="正在整理回答…";
+ const loading=addBubble("正在结合研究资料整理回答…","assistant");const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),45000);
+ try{
+  const payload=messages.slice(-10);
+  const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:payload}),signal:controller.signal});
+  let data;try{data=await response.json()}catch(e){throw new Error("服务器返回内容无法识别")}
+  if(!response.ok)throw new Error(data.error||("请求失败（HTTP "+response.status+"）"));
+  if(typeof data.reply!=="string"||!data.reply.trim())throw new Error("没有获得有效回答");
+  loading.remove();addBubble(data.reply.trim(),"assistant",{copy:true});messages.push({role:"assistant",content:data.reply.trim()});statusText.textContent="回答完成 · 可以继续提问";
+ }catch(e){
+  loading.remove();const reason=e.name==="AbortError"?"请求超时，请检查网络后重试。":e.message==="Failed to fetch"?"浏览器没有收到接口响应，可能是网络连接、CORS 预检或函数地址问题。请在 Supabase → Edge Functions → roubing-ai-chat → Invocations 检查请求是否到达。":(e.message||"网络连接失败");
+  addBubble("暂时无法回答："+reason+"\n请稍后重试。如果持续失败，请检查 Supabase 的 roubing-ai-chat 函数和 DeepSeek API 配置。","assistant",{error:true,retry:q});
+  if(messages.length&&messages[messages.length-1].role==="user")messages.pop();statusText.textContent="回答失败 · 可重试";
+ }finally{clearTimeout(timeout);busy=false;sendBtn.disabled=false;questionEl.focus();chatLog.scrollTop=chatLog.scrollHeight}
+}
+sendBtn.addEventListener("click",()=>sendQuestion());
+questionEl.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();sendQuestion()}});
+document.querySelectorAll(".suggestion").forEach(b=>b.addEventListener("click",()=>sendQuestion(b.dataset.q)));
+document.getElementById("newChat").addEventListener("click",()=>{
+ if(busy){showToast("请等待当前回答完成");return}messages.length=0;chatLog.innerHTML="";
+ addBubble("你好！我是肉饼营养研究助手。可以问我 RMR 公式、营养标签换算、钠和过敏原。没有真实产品标签时，我不会编造营养数值。","assistant");statusText.textContent="新对话已开始";
+});
+document.getElementById("exportChat").addEventListener("click",()=>{
+ const content="肉饼营养研究助手 · 对话记录\n导出时间："+new Date().toLocaleString()+"\n\n"+messages.map(m=>(m.role==="user"?"你":"助手")+"：\n"+m.content).join("\n\n---\n\n");
+ const blob=new Blob([content],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="肉饼营养助手-对话记录.txt";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showToast("对话记录已导出");
+});
+document.getElementById("fitForm").addEventListener("submit",e=>{
+ e.preventDefault();const goals=Array.from(document.querySelectorAll('input[name="goal"]:checked')).map(x=>x.value),risks=Array.from(document.querySelectorAll('input[name="risk"]:checked')).map(x=>x.value),notes=document.getElementById("fitNotes").value.trim();
+ if(!goals.length&&!risks.length&&!notes){showToast("至少选择一项关注点，或填写补充说明");return}
+ const prompt="请做一份谨慎的肉饼初步饮食需求匹配分析。我的关注点："+(goals.join("、")||"未填写")+"。需核对事项："+(risks.join("、")||"未填写")+"。补充说明："+(notes||"未填写")+"。请按“初步判断、目前能确认的信息、仍缺少的产品资料、下一步建议”组织回答。不要编造产品营养值或过敏原结论。若没有真实标签/配料表/检测报告，请明确说无法判断；严重过敏、慢性病、儿童或特殊医学营养需求应建议咨询专业人员。参考：WHO 建议成人钠少于 2000 mg/天（相当于盐少于 5 g/天）；GB 28050-2025 和 GB 7718-2025 将于 2027-03-16 实施，具体以国家卫健委官方问答和标准原文为准。";
+ document.getElementById("fitDetails").open=false;document.getElementById("assistant").scrollIntoView({behavior:"smooth",block:"start"});sendQuestion(prompt);
+});
+updateCounter();
+</script>
+</body>
+</html>
